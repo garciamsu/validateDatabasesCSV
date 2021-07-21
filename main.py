@@ -2,16 +2,17 @@ import pandas as pd
 from os import remove
 import os
 
+#Initialitation
+password = "password"
+event = "feria-de-autos-peru"
+
 #Remove result'file
-remove("result.csv")
+if os.path.isfile(event +".csv"):
+    remove(event +".csv")
 
 # Define the folder'route
 root = os.getcwd()
 pathname = os.path.join(root)
-
-#pd.read_csv(gdp_path, sep='\t', engine='python')
-#, encoding='utf-8'
-#encoding='latin1'
 
 # Read the file source CSV
 df_comma = pd.read_csv(pathname + "/source/origin.csv", sep=",",encoding='latin1')
@@ -46,8 +47,8 @@ for index1, row1 in origin.iterrows():
     if (not (row1["email"] in mirror.email.values)):
         count = count + 1
         result.append(row1)
-        result=result.append({'name' : row1["name"] , 'email' : row1["email"]} , ignore_index=True)
+        result=result.append({'name' : row1["name"] , 'email' : row1["email"], 'password' : password, 'event': event } , ignore_index=True)
     
 print(result)
 print(result.size)
-result.to_csv('result.csv', encoding ='latin1', index=False)
+result.to_csv("UsuariosCSV.csv", encoding ='latin1', index=False)
